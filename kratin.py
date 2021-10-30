@@ -7,9 +7,15 @@ mydb=mysql.connector.connect(host='localhost',user='root',password='',database='
 
 if mydb:
     cur=mydb.cursor()
-    #cur.execute("CREATE DATABASE TODOTRACKER")
-    #querry="CREATE TABLE Track(trackid integer(10) NOT NULL AUTO_INCREMENT,tdate date NOT NULL,twork varchar(20) NOT NULL,ttime time(0) NOT NULL,tampm varchar(2),PRIMARY KEY (trackid))"
-    #cur.execute(querry)
+    stmt = "SHOW DATABASES LIKE 'TODOTRACKER'"
+    cur.execute(stmt)
+    result = cur.fetchone()
+    if result:
+        pass
+    else:
+        cur.execute("CREATE DATABASE TODOTRACKER")
+        querry="CREATE TABLE Track(trackid integer(10) NOT NULL AUTO_INCREMENT,tdate date NOT NULL,twork varchar(20) NOT NULL,ttime time(0) NOT NULL,tampm varchar(2),PRIMARY KEY (trackid))"
+        cur.execute(querry)
 else:
     print("connection not established !!")
 
