@@ -75,12 +75,17 @@ for i in work:
         hour=hour+12
         
     while 1:
+        
         if(hour==datetime.datetime.now().hour and minute==datetime.datetime.now().minute):
+            
             playsound.playsound('beep-02.mp3')
             print("Time to start",i)
+            
             Insert_Query="INSERT INTO Track(tdate,twork,ttime,tampm) VALUES(%s,%s,%s,%s)"
+            
             for x in time:
                 output+=str(x)
+                
             values=(datetime.date.today(),i,output,amPm)
             cur.execute(Insert_Query,values)
             mydb.commit()
@@ -88,8 +93,10 @@ for i in work:
             break
         
 print("plan executed for today")
+
 while 1:
     n=input("1 :- press 1 to see you track\n2 :- see date wise\n3 :- exit\n")
+    
     if n=='1':
         seeTrack()
     elif n=='2':
@@ -106,14 +113,18 @@ while 1:
             cur.execute(select_query,datetime.date(int(year), int(month), int(date)))
         except  ValueError:
             print("pls enter proper date")
+            
         result=cur.fetchall()
+        
         if result:
             for x in result:
                 print(x)
         else:
             print("No data found")
+            
     elif n=='3':
         break
+        
     else:
         print("pleas select proper option")
 
