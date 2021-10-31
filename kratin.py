@@ -3,9 +3,11 @@ import os
 import mysql.connector
 import playsound
 
-mydb=mysql.connector.connect(host='localhost',user='root',password='',database='TODOTRACKER')
+# connecting to mysql database
+mydb=mysql.connector.connect(host='localhost',user='root',password='',database='TODOTRACKER') 
 
-if mydb:
+# checking connection and if database exist if not then creating database and table
+if mydb:   
     cur=mydb.cursor()
     stmt = "SHOW DATABASES LIKE 'TODOTRACKER'"
     cur.execute(stmt)
@@ -20,7 +22,7 @@ else:
     print("connection not established !!")
 
 
-
+# function renders all activity done till date
 def seeTrack():
     Select_Querry="select * from Track"
     cur.execute(Select_Querry)
@@ -35,6 +37,7 @@ work=[]
 time=[]
 output=''
 
+#creating list which has to complete today
 while 1:
     n=input("Enter the work")
     work.append(n)
@@ -47,10 +50,12 @@ print("your plan for today")
 
 count=1
 
+#displaying play for today
 for i in work:
     print(count,".",i)
     count+=1
-    
+
+#setting alert sound for particular work which will remind its time to complete task
 for i in work:
     os.system("clear")
     print("Set the timer so tha we can alert you for",i)
@@ -94,6 +99,8 @@ for i in work:
         
 print("plan executed for today")
 
+
+#traking the plans which has executed
 while 1:
     n=input("1 :- press 1 to see you track\n2 :- see date wise\n3 :- exit\n")
     
@@ -108,7 +115,8 @@ while 1:
         date=input("enter the date")
 
         select_query="select * from Track where tdate = '%s'"
-
+        
+        #handling code for date
         try:
             cur.execute(select_query,datetime.date(int(year), int(month), int(date)))
         except  ValueError:
